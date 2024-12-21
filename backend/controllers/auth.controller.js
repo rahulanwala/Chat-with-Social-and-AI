@@ -4,15 +4,16 @@ const generateTokenandSetCookie = require('../utils/generateToken');
 
 const signup = async (req, res) => {
     try {
-        const { fullName, username, password, confirmpassword, gender } = req.body;
+        const { fullName, username, password, confirmPassword, gender } = req.body;
 
-        if (password !== confirmpassword) {
-            return res.status(400).json({ msg: "Password don't match" })
+        if (password !== confirmPassword) {
+            return res.status(400).json({ error: "Password don't match" })
         }
 
         const user = await User.findOne({ username });
         if (user) {
-            return res.status(400).json({ msg: "Username already exists" })
+            // console.log("User already exists")
+            return res.status(400).json({ error: "Username already exists" })
         }
 
         // HASH the password
@@ -44,11 +45,12 @@ const signup = async (req, res) => {
         }
     } catch (error) {
         console.log("Error on signup controller", error)
-        res.status(500).json({ msg: "Server Error" })
+        res.status(500).json({ error: "Server Error" })
     }
 }
 
 const login = async (req, res) => {
+    // console.log(req.body)
     try {
         const { username, password } = req.body;
 
@@ -56,7 +58,7 @@ const login = async (req, res) => {
         const isPasswordMatch = await bcrypt.compare(password, user?.password || "");
 
         if (!user || !isPasswordMatch) {
-            return res.status(400).json({ msg: "Invalid username or password" })
+            return res.status(400).json({ error: "Invalid username or password" })
         }
         
         generateTokenandSetCookie(user._id, res);
@@ -70,7 +72,7 @@ const login = async (req, res) => {
     } 
     catch (error) {
         console.log("Error on login controller", error)
-        res.status(500).json({ msg: "Server Error" })
+        res.status(500).json({ error: "Server Error" }) 
     }
 }
 
@@ -81,7 +83,7 @@ const logout = (req, res) => {
     }
     catch (error) {
         console.log("Error on login controller", error)
-        res.status(500).json({ msg: "Server Error" })
+        res.status(500).json({ error: "Server Error" })
     }
 }
 
