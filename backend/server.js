@@ -2,6 +2,7 @@ const express = require('express')
 const dotenv = require('dotenv')
 const cookieParser = require('cookie-parser')
 const cors = require('cors');
+const path = require("path");
 
 const connectToMongoDB = require('./db/connectToMongoDB')
 const authRoutes = require('./routes/auth.route')
@@ -21,6 +22,15 @@ app.use(cookieParser()) // to parse the incoming cookies from the request header
 app.use('/api/auth',authRoutes)
 app.use('/api/messages',messageRoutes)
 app.use('/api/users', userRoutes)
+
+//** for deployment */
+const path_dir = path.resolve();
+app.use(express.static(path.join(path_dir, "/frontend/dist")));
+
+app.get("*", (req, res) => {
+	res.sendFile(path.join(path_dir, "frontend", "dist", "index.html"));
+});
+/////////
 
 server.listen(PORT, ()=>{
     connectToMongoDB()
