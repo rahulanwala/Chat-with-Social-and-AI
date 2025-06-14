@@ -1,13 +1,14 @@
-import React from 'react'
 import useConversation from '../../zustand/useConversation'
 import { useSocketContext } from '../../context/SocketContext';
 
-const Conversation = ({conversation,lastInd,emoji}) => {
-  const {selectedConversation, setSelectedConversation} = useConversation();
+const GEMINI_BOT_ID = "684d5abbb778607a3db28bbf" // used gemini_bot_id
+
+const Conversation = ({ conversation, lastInd, emoji }) => {
+  const { selectedConversation, setSelectedConversation } = useConversation();
   const isSelected = selectedConversation?._id === conversation._id;
 
-  const {onlineUsers} = useSocketContext();
-  const isOnline = onlineUsers.includes(conversation._id)
+  const { onlineUsers } = useSocketContext();
+  const isOnline = onlineUsers.includes(conversation._id) || conversation._id === GEMINI_BOT_ID; // used gemini_bot_id
 
   return (
     <>
@@ -22,12 +23,16 @@ const Conversation = ({conversation,lastInd,emoji}) => {
         <div className='flex flex-col flex-1'>
           <div className='flex gap-3 justify-between'>
             <p className='font-bold text-gray-200'>{conversation.fullName}</p>
-            <span className='text-xl'>{emoji}</span>
-          </div> 
+            <span className='text-xl'>
+              {conversation._id === GEMINI_BOT_ID
+                ? '🤖' // used gemini_bot_id
+                : emoji}
+            </span>
+          </div>
         </div>
       </div>
 
-       {!lastInd && <div className='divider my-0 py-0 h-1'></div>}
+      {!lastInd && <div className='divider my-0 py-0 h-1'></div>}
     </>
   )
 }

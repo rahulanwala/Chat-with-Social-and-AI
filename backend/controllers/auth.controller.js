@@ -2,6 +2,9 @@ const User = require('../models/user.model')
 const bcrypt = require('bcryptjs');
 const generateTokenandSetCookie = require('../utils/generateToken');
 
+// used gemini_bot_id
+const geminiImg = '../gemini.png';
+
 const signup = async (req, res) => {
     try {
         const { fullName, username, password, confirmPassword, gender } = req.body;
@@ -28,7 +31,11 @@ const signup = async (req, res) => {
             username,
             password: hashedPassword,
             gender,
-            profilePic: gender === "male" ? boyProfilePic : girlProfilePic
+            profilePic: username === "gemini"
+                ? geminiImg
+                : gender === "male"
+                    ? boyProfilePic
+                    : girlProfilePic
         })
 
         if (newUser) {
@@ -60,7 +67,7 @@ const login = async (req, res) => {
         if (!user || !isPasswordMatch) {
             return res.status(400).json({ error: "Invalid username or password" })
         }
-        
+
         generateTokenandSetCookie(user._id, res);
 
         res.status(200).json({
@@ -69,17 +76,17 @@ const login = async (req, res) => {
             username: user.username,
             profilePic: user.profilePic
         });
-    } 
+    }
     catch (error) {
         console.log("Error on login controller", error)
-        res.status(500).json({ error: "Server Error" }) 
+        res.status(500).json({ error: "Server Error" })
     }
 }
 
 const logout = (req, res) => {
-    try{
-        res.cookie("jwt", "", {maxAge: 0});
-        res.status(200).json({msg: "Logged out successfully"})
+    try {
+        res.cookie("jwt", "", { maxAge: 0 });
+        res.status(200).json({ msg: "Logged out successfully" })
     }
     catch (error) {
         console.log("Error on login controller", error)

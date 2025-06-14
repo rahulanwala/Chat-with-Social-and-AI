@@ -12,6 +12,7 @@ const Messages = () => {
 
   const lastMessageRef = useRef();
 
+  // To scroll to the last message when new messages are added
   useEffect(() => {
     setTimeout(() => {
       lastMessageRef.current?.scrollIntoView({ behavior: "smooth" })

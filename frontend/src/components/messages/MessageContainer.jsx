@@ -9,7 +9,7 @@ const MessageContainer = () => {
     const {selectedConversation,setSelectedConversation} = useConversation();
 
     useEffect(() => {
-        // Cleanup function (unmount)
+        // Cleanup function (unmount) when you logout effect changes
         return () => {
             setSelectedConversation(null)
         }

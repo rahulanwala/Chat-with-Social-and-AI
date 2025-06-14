@@ -6,6 +6,8 @@ import toast from 'react-hot-toast';
 
 const SearchInput = () => {
   const[search,setSearch] = useState('');
+
+  // Zustand hooks to manage conversations and selected conversation
   const {setSelectedConversation} = useConversation();
   const {conversations} = useGetConversations();
 

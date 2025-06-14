@@ -19,7 +19,7 @@ app.use(cors());
 app.use(express.json()) // to parse the incoming request with JSON payloads (req.body)
 app.use(cookieParser()) // to parse the incoming cookies from the request headers
 
-app.use('/api/auth',authRoutes)
+app.use('/api/auth',authRoutes) 
 app.use('/api/messages',messageRoutes)
 app.use('/api/users', userRoutes)
 

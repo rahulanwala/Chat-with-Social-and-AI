@@ -10,7 +10,7 @@ const io = new Server(server, {
         origin: ["http://localhost:3000"], // Allow only the client from this origin
         methods: ["GET", "POST"]
     }
-});
+}); 
 
 const getReceiverSocketId = (receiverId) => {
     return userSocketMap[receiverId]

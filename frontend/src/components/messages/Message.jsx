@@ -1,4 +1,5 @@
-import React from 'react'
+import ReactMarkdown from 'react-markdown'
+
 import useConversation from '../../zustand/useConversation';
 import {useAuthContext} from '../../context/AuthContext';
 import { extractTime } from '../../utils/extractTime';
@@ -21,7 +22,7 @@ const Message = ({message}) => {
             </div>
         </div>
 
-        <div className={`chat-bubble text-white ${bubbleBgColor} ${shakeClass} pb-2`}>{message.message}</div>
+        <div className={`chat-bubble text-white ${bubbleBgColor} ${shakeClass} pb-2`}> <ReactMarkdown>{message.message}</ReactMarkdown></div>
         <div className='chat-footer opacity-50 text-xs flex gap-1 items-center'>{formattedTime}</div>
     </div>
   )
