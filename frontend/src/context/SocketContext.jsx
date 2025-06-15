@@ -5,7 +5,7 @@ import io from 'socket.io-client'
 
 export const SocketContext = createContext();
 
-export const useSocketContext = () => {
+export const useSocketContext = () => { 
     return useContext(SocketContext);
 }
 
@@ -16,7 +16,7 @@ export const SocketContextProvider = ({children}) => {
 
     useEffect(()=>{
         if(authUser){
-            const socket = io('http://localhost:5000',{
+            const socket = io('http://localhost:3000/',{
                 query:{
                     userId: authUser._id
                 }

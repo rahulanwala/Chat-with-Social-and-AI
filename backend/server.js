@@ -9,6 +9,8 @@ const authRoutes = require('./routes/auth.route')
 const messageRoutes = require('./routes/message.routes')
 const userRoutes = require('./routes/user.routes')
 
+const chatRoutes =require("./routes/chatbot.routes")
+
 const {app,server} = require('./socket/socket.js')
 // const app = express();
 
@@ -22,6 +24,8 @@ app.use(cookieParser()) // to parse the incoming cookies from the request header
 app.use('/api/auth',authRoutes) 
 app.use('/api/messages',messageRoutes)
 app.use('/api/users', userRoutes)
+
+app.use("/api/chatbot", chatRoutes)
 
 //** for deployment */
 const path_dir = path.resolve();
